@@ -6,12 +6,10 @@
 int linear_search(int *arr, int n, int target)
 { 
     int i; 
-    int sorted = is_sorted_nondecreasing(arr, n);
     for (i=0; i<n; i++) {
         if (arr[i]==target){ 
             return i; 
         } 
-    return -1;
     }
     // linear search, return index of target
     // return -1 if not found
@@ -21,9 +19,7 @@ int linear_search(int *arr, int n, int target)
 
 int jump_search(int *arr, int n, int target)
 {
-    int sorted = is_sorted_nondecreasing(arr, n); 
-
-    if (is_sorted_nondecreasing(arr,n) == NULL){ 
+    if (!is_sorted_nondecreasing(arr,n)){ 
         return -1;
     }
     int m = sqrt(n); 
@@ -38,11 +34,10 @@ int jump_search(int *arr, int n, int target)
         }
     } 
     int i;  
-    for (i=prev; prev<=min_int(m,n); i++){ 
+    for (i=prev; i<=min_int(m,n); i++){ 
         if (arr[i]==target){ 
             return i; 
         }
-    return -1;
     }  
     // jump search on sorted array, return index
     // of target, return -1 if not found
@@ -52,8 +47,20 @@ int jump_search(int *arr, int n, int target)
 int binary_search(int *arr, int n, int target)
 { 
     int low = 0; 
-    int high; 
-    
+    int high = n - 1; 
+    while (low<=high)
+    {
+        int mid = (low + high)/2; 
+        if (target == arr[mid]) { 
+            return mid; 
+        } 
+        if (target < arr[mid]) { 
+            high = mid - 1;
+        } 
+        else { 
+            low = mid + 1;
+        }
+    }
     // binary search on sorted array, return index
     // of target, return -1 if not found
     return -1;
